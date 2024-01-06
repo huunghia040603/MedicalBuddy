@@ -1,0 +1,29 @@
+{% extends 'layout/base.html' %}
+{% block title %}Medical Buddy - Đăng nhập{%endblock%}
+{%block content%}
+<div class="container p-5 container-sm " style="max-width:600px">
+ <h2 style="text-align:center">  SIGN IN </h2>
+  <div class="footer-social d-md-none d-lg-block " style="text-align:center">
+  <a href="https://www.facebook.com/" target="blank" class="hovicon"><i
+          class="fa-brands fa-facebook"></i></a>
+  <a href="https://accounts.google.com/signin/oauth/error/v2?authError=Cg5kZWxldGVkX2NsaWVudBIdVGhlIE9BdXRoIGNsaWVudCB3YXMgZGVsZXRlZC4gkQM%3D&client_id=919352421263-e18mqjhotmb6l176kflviroomrbbd5qd.apps.googleusercontent.com" target="blank" class="hovicon"><i
+          class="fa-brands fa-google-plus-g"></i></a>
+  <a href="https://www.instagram.com/" target="blank" class="hovicon"><i
+          class="fa-brands fa-instagram"></i></a>
+</div>
+    <p style="text-align:center;color:black;font-size:12px" >hoặc sử dụng tài khoản</p>
+<form method="post" action="">
+  <div class="mb-3 mt-3">
+    <label for="username" class="form-label">Username:</label>
+    <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="pass" class="form-label">Mật Khẩu:</label>
+    <input type="password" class="form-control" id="pass" placeholder="Enter password" name="pass" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+{%endblock%}

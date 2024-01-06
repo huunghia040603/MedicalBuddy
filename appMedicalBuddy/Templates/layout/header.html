@@ -1,0 +1,103 @@
+<!--header-->
+<header class="header">
+    <div class="header-quickLinks js-header-quickLinks d-lg-none">
+        <div class="quickLinks-top js-quickLinks-top"></div>
+        <div class="js-quickLinks-wrap-m">
+        </div>
+    </div>
+    <div class="header-topline d-none d-lg-flex">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-auto d-flex align-items-center">
+                    <div class="header-phone"><i class="fa-solid fa-phone"></i><a
+                            href="tel:1-847-555-5555">1-900-234-000</a></div>
+                    <div class="header-info"><i class="fa-solid fa-location-dot"></i>156 Nguyen Binh Street Nha Be,
+                        TPHCM
+                    </div>
+                    <div class="header-info"><i class="fa-solid fa-envelope"></i><a href="mailto:info@dentco.net">info@dentco.net</a>
+                    </div>
+                </div>
+                <div class="col-auto ml-auto d-flex align-items-center">
+						<span >
+							<a href="#" class="hovicon "><i class="fa-brands fa-facebook"></i></a>
+							<a href="#" class="hovicon m-1"><i class="fa-brands fa-instagram"></i></a>
+							<a href="#" class="hovicon "><i class="fa-brands fa-google-plus-g"></i></a>
+						</span>
+
+                </div>
+
+
+
+                  <span class="header-login">
+                      {% if current_user.is_authenticated %}
+                        <a href="/log-out">Log Out</a>
+                        <a href="/profile" data-bs-toggle="tooltip" title="Nhấn vào để xem thông tin!">Hi. {{ current_user.username }}</a>
+                    {% else %}
+                        <a href="/sign-up">Sign Up</a>
+                        <a href="/sign-in">Sign In</a>
+                      {% endif %}
+                  </span>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light ">
+        <div class="container-fluid">
+            <a class="navbar-brand"  href="/"><img  width="100" src="{{ url_for('static', filename='images/logo/logoMB.png') }}"/></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <ul class="navbar-nav " style="border:0;font-weight: None;">
+                <li class="nav-item me-2 "  style="font-size:1.50rem;">
+                    <a class="nav-link " style="border:0" href="/about">About Us</a>
+                </li>
+                <li class="nav-item me-2" style="font-size:1.50rem">
+                    <a href="/schedule" class="nav-link" style="border:0"
+                       data-toggle="dropdown">Schedule Table</a>
+                </li>
+                <li class="nav-item me-2" style="font-size:1.50rem" >
+                    <a class="nav-link" style="border:0;" href="/question">Questions</a>
+                </li>
+                <li class="nav-item me-2" style="font-size:1.50rem">
+                    <a href="/blog" style="border:0" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item me-2" style="font-size:1.50rem">
+                    <a class="nav-link" style="border:0" href="/contact">Contacts</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown"><i
+                            class="fa-solid fa-globe"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><span class="header-lang-flag"><img class="m-1"
+                                src="{{ url_for('static', filename='images/flag/flag_en.png') }}"
+                                alt=""></span><span></span></a></li>
+                        <li><a class="dropdown-item" href="#"><span class="header-lang-flag"><img class="m-1"
+                                src="{{ url_for('static', filename='images/flag/flag_fr.png') }}"
+                                alt=""></span><span></span></a></li>
+                        <li><a class="dropdown-item" href="#"><span class="header-lang-flag"><img class="m-1"
+                                src="{{ url_for('static', filename='images/flag/flag_de.png') }}"
+                                alt=""></span><span></span></a></li>
+                        <li><a class="dropdown-item" href="#"><span class="header-lang-flag"><img class="m-1"
+                                src="{{ url_for('static', filename='images/flag/flag_ru.png') }}"
+                                alt=""></span><span></span></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    </div>
+    <script>
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+</script>
+</header>
+<!--//header-->

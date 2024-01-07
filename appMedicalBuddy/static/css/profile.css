@@ -481,7 +481,7 @@ a>code {
   }
 }
 
-.form-control {
+.form-control1 {
   font-size: 1rem;
   line-height: 1.5;
   display: block;
@@ -498,7 +498,7 @@ a>code {
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
-  .form-control {
+  .form-control1 {
     transition: none;
   }
 }

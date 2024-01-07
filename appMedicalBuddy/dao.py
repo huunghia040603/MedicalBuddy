@@ -1,7 +1,7 @@
 import hmac
 from datetime import datetime
 
-from appMedicalBuddy.models import TaiKhoan, CauHoi, BenhNhan, ThongTinNguoiDung
+from appMedicalBuddy.models import TaiKhoan, CauHoi, BenhNhan, ThongTinNguoiDung, DatLichKham
 import hashlib
 from appMedicalBuddy import app, db
 import cloudinary.uploader
@@ -12,7 +12,7 @@ from flask_login import current_user
 def add_user(username, password, email, tenNguoiDung):
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
 
-    u = TaiKhoan(username=username, password=password, email=email, tenNguoiDung=tenNguoiDung)
+    u = BenhNhan(username=username, password=password, email=email, tenNguoiDung=tenNguoiDung)
     db.session.add(u)
     db.session.commit()
 
@@ -40,12 +40,35 @@ def ma_hoa(data):
                     hashlib.sha256).hexdigest()
 
 def add_question(topic, message):
-    q = CauHoi(id_TaiKhoan=current_user.id, chuDe=topic, noiDung=message, ngayGui=datetime.now())
+    q = CauHoi(id_BenhNhan = current_user.id, chuDe=topic, noiDung=message, ngayGui=datetime.now())
     db.session.add(q)
     db.session.commit()
 
     return q
 
+
+def add_booking(name=None,email=None, ngayKham=None):
+    if name and email:
+      taiKhoan= TaiKhoan.query.filter(TaiKhoan.email.__eq__(email)).first()
+      if taiKhoan:
+          q=DatLichKham(id_BenhNhan=taiKhoan.id,ngayKham=ngayKham)
+      else:
+          BN=BenhNhan(username=email, tenNguoiDung=name, password=str(hashlib.md5('123456'.encode('utf-8')).hexdigest()), email=email)
+          db.session.add(BN)
+          q= DatLichKham(benhnhan=BN, ngayKham=ngayKham)
+    else:
+        q = DatLichKham(id_BenhNhan = current_user.id, ngayKham=ngayKham)
+    db.session.add(q)
+    db.session.commit()
+
+    return q
+
+def check_MK(matkhau):
+    #tk = TaiKhoan.query.filter(TaiKhoan.username == current_user.username).first()
+    return current_user.password==(str(hashlib.md5(matkhau.strip().encode('utf-8')).hexdigest()))
+
+def get_BenhNhan():
+    return BenhNhan.query.all()
 def change_password(email, old_password, new_password):
     account_patient = TaiKhoan.query.filter(TaiKhoan.email == email).first()
 

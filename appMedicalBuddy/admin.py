@@ -3,7 +3,7 @@ from flask_admin import BaseView, expose, AdminIndexView, Admin
 from flask_login import current_user, logout_user
 from flask import redirect, request
 
-from appMedicalBuddy.models import LichKham, Thuoc, BenhNhan, YTa, DatLichKham, LichSuBenh, HoaDon, ChiTietHoaDon, \
+from appMedicalBuddy.models import  Thuoc, BenhNhan, YTa, DatLichKham, LichSuBenh, HoaDon, ChiTietHoaDon, \
     CauHoi, TraLoi, QuyDinh, Benh, UserRoleEnum
 from appMedicalBuddy import db, app
 
@@ -195,7 +195,6 @@ class DetailByDateView(BaseView):
         return current_user.is_authenticated
 
 
-admin.add_view(LichKhamModelView(LichKham, db.session, name="LichKham"))
 
 admin.add_view(ThuocModelView(Thuoc, db.session, name="Thuocs", category='Lists'))
 admin.add_view(BenhNhanModelView(BenhNhan, db.session, name="BenhNhans", category='Lists'))

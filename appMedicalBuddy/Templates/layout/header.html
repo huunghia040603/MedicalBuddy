@@ -1,5 +1,5 @@
 <!--header-->
-<header class="header">
+<header class="header" style="position:fixed;width:100%;z-index:1000">
     <div class="header-quickLinks js-header-quickLinks d-lg-none">
         <div class="quickLinks-top js-quickLinks-top"></div>
         <div class="js-quickLinks-wrap-m">
@@ -9,12 +9,12 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-auto d-flex align-items-center">
-                    <div class="header-phone"><i class="fa-solid fa-phone"></i><a
+                    <div class="header-phone"><i class="fa-solid fa-phone icon-telephone"></i><a
                             href="tel:1-847-555-5555">1-900-234-000</a></div>
-                    <div class="header-info"><i class="fa-solid fa-location-dot"></i>156 Nguyen Binh Street Nha Be,
+                    <div class="header-info"><i class="fa-solid fa-location-dot icon-placeholder2"></i>156 Nguyen Binh Street Nha Be,
                         TPHCM
                     </div>
-                    <div class="header-info"><i class="fa-solid fa-envelope"></i><a href="mailto:info@dentco.net">info@dentco.net</a>
+                    <div class="header-info"><i class="fa-solid fa-envelope icon-black-envelope"></i><a href="mailto:medicalbuddy.info.vn">medicalbuddy.info.vn</a>
                     </div>
                 </div>
                 <div class="col-auto ml-auto d-flex align-items-center">
@@ -54,23 +54,28 @@
             </button>
 
             <ul class="navbar-nav " style="border:0;font-weight: None;">
-                <li class="nav-item me-2 "  style="font-size:1.50rem;">
+                {%if current_user.is_authenticated and current_user.user_role.value == 2%}
+                <li class="nav-item me-2 "  style="font-size:1.20rem" id="lpk1">
+                    <a class="nav-link " style="border:0" href="/lapphieukham">Form Creation</a>
+                </li>
+                {% endif %}
+                <li class="nav-item me-2 "  style="font-size:1.20rem;" >
                     <a class="nav-link " style="border:0" href="/about">About Us</a>
                 </li>
-                <li class="nav-item me-2" style="font-size:1.50rem">
+                <li class="nav-item me-2" style="font-size:1.20rem">
                     <a href="/schedule" class="nav-link" style="border:0"
                        data-toggle="dropdown">Schedule Table</a>
                 </li>
-                <li class="nav-item me-2" style="font-size:1.50rem" >
+                <li class="nav-item me-2" style="font-size:1.20rem" >
                     <a class="nav-link" style="border:0;" href="/question">Questions</a>
                 </li>
-                <li class="nav-item me-2" style="font-size:1.50rem">
+                <li class="nav-item me-2" style="font-size:1.20rem">
                     <a href="/blog" style="border:0" class="nav-link">Blog</a>
                 </li>
-                <li class="nav-item me-2" style="font-size:1.50rem">
+                <li class="nav-item me-2" style="font-size:1.20rem">
                     <a class="nav-link" style="border:0" href="/contact">Contacts</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" style="font-size:1.20rem">
                     <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown"><i
                             class="fa-solid fa-globe"></i></a>
                     <ul class="dropdown-menu">

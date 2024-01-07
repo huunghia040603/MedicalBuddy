@@ -1,0 +1,215 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} Medical Buddy - Lập Phiếu Khám {% endblock %}
+
+{% block content %}
+<div>
+    <div class="page-content">
+        <!--section-->
+        <div class="section mt-0">
+            <div class="breadcrumbs-wrap">
+                <div class="container">
+                    <div class="breadcrumbs">
+                        <a href="/">Home</a>
+                        <span>Form Creation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="container-fluid ">
+            <div class="row">
+                <div class="col-xl order-xl">
+                    <div class="card shadow">
+                        <div class="card-header bg-white border-40">
+                            <div class=" align-items-center">
+                                <div class="">
+                                    <h3 class="mb-0 text-center">PHIẾU KHÁM BỆNH</h3>
+                                </div>
+                                <div class=" text-right">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="heading-small text-muted mb-4">Thông Tin Bác Sĩ</h6>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-username">Tên:</label>
+                                            <input type="text" id="input-username" readonly
+                                                   class="form-control form-control-alternative" placeholder="Username"
+                                                   value="{{ current_user.tenNguoiDung }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-email">Email Address</label>
+                                            <input type="email" id="input-email" readonly
+                                                   class="form-control form-control-alternative"
+                                                   placeholder="Hiện đang trống"
+                                                   value="{{ current_user.email }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-type">Chức Vụ:</label>
+                                            {%if (current_user.user_role.value==5)%}
+                                            <input type="text" id="input-type" readonly
+                                                   class="form-control form-control-alternative"
+                                                   placeholder="Account Type"
+                                                   value="Bệnh Nhân">
+                                            {%endif%}
+                                            {%if (current_user.user_role.value==2)%}
+                                            <input type="text" id="input-type1" readonly
+                                                   class="form-control form-control-alternative"
+                                                   placeholder="Account Type"
+                                                   value="Bác Sĩ">
+                                            {%endif%}
+                                            {%if (current_user.user_role.value==3)%}
+                                            <input type="text" id="input-type2" readonly
+                                                   class="form-control form-control-alternative"
+                                                   placeholder="Account Type"
+                                                   value="Y Tá">
+                                            {%endif%}
+                                            {%if (current_user.user_role.value==1)%}
+                                            <input type="text" id="input-type3" readonly
+                                                   class="form-control form-control-alternative"
+                                                   placeholder="Account Type"
+                                                   value="Quản Trị">
+                                            {%endif%}
+                                            {%if (current_user.user_role.value==4)%}
+                                            <input type="text" id="input-type4" readonly
+                                                   class="form-control form-control-alternative"
+                                                   placeholder="Account Type"
+                                                   value="Thu Ngân">
+                                            {%endif%}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <!-- Change Password -->
+                            <h6 class="heading-small text-muted mb-4">Thông Tin Khám Bệnh</h6>
+                            <div class="pl-lg-4">
+                                <form id="changePasswordForm" method="post">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="browser">Tên bệnh
+                                                    nhân:</label>
+                                                <input class="form-control" list="browsers" name="browser" id="browser" placeholder="Bắt buộc chọn">
+                                                <datalist id="browsers">
+                                                    {%for bn in ds_BenhNhan%}
+                                                    <option value="{{bn.tenNguoiDung}}"/>
+                                                    {% endfor%}
+                                                </datalist>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="idngaykham1">Ngày khám
+                                                    bệnh:</label>
+                                                <input type="text" id="idngaykham1"
+                                                       class="form-control form-control-alternative"
+                                                       placeholder="Hệ thống tự cập nhật"
+                                                       name="newPassword" readonly >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group focused">
+                                                <label class="form-control-label" for="input-username">Triệu
+                                                    chứng:</label>
+                                                <input type="text" id="input-username6"
+                                                       class="form-control form-control-alternative"
+                                                       placeholder="Bệnh nhân cảm thấy như thế nào? "
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-email">Dự Đoán
+                                                    Bệnh:</label>
+                                                <input type="email" id="input-email6"
+                                                       class="form-control form-control-alternative"
+                                                       placeholder="Bệnh dự đoán........................................" data-bs-toggle="modal" data-bs-target="#modalKiemTra"
+                                                >
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </form>
+                            </div>
+
+                        <hr class="my-4">
+                        <div class="row" style="padding: 0 15px;!important;">
+                            <input type="submit" class="btn btn-hover-fill" value="XUẤT PHIẾU KHÁM"/>
+                        </div>
+                        <br/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="modal modal-form fade" id="modalKiemTra">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button aria-label='Close' class='close' data-bs-dismiss='modal'>
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+            <div class="modal-body">
+                <div class="modal-form">
+                    <h3>Xác Minh Bác Sĩ</h3>
+                    <form class="mt-15" id="bookForm" method="post" novalidate>
+                        <div class="successform">
+                            <p>Lịch khám đã được đặt thành công! Vui lòng đến đúng giờ</p>
+                        </div>
+                        <div class="errorform">
+                            <p>Đã xảy ra lỗi, hãy thử làm mới và gửi lại biểu mẫu ĐẦY ĐỦ hoặc vui lòng gọi 1900-234-000
+                                để được hỗ trợ.</p>
+                        </div>
+                        <div>Tên của BÁC SĨ:</div>
+                        <div class="input-group">
+								<span>
+                                   <i class="fa-solid fa-user aa" style=""></i>
+                                </span>
+                            <input type="text" name="bookingname" class="form-control " autocomplete="off"
+                                   placeholder="Patient Name*" value="{{ current_user.tenNguoiDung }}"/>
+                        </div>
+                        <div>Vui Lòng Nhập Lại Mật Khẩu:</div>
+                        <div class="input-group">
+										<span>
+											<i class="fa-solid fa-key aa"></i>
+										</span>
+                            <input type="password" name="bookingemail" class="form-control" autocomplete="off" id="matkhau"
+                                   placeholder="Nhập mật khẩu....." />
+                        </div>
+
+
+                        <div class="text-right mt-2">
+                            <button type="button" class="btn btn-sm btn-hover-fill" onclick="CheckMK()"
+                                    class="booking1"  data-bs-dismiss="modal">Xác Minh
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br/><br/><br/><br/>
+{%endblock%}

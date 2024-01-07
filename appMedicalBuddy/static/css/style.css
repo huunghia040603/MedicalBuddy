@@ -1309,7 +1309,7 @@ pre {
   .table-responsive.table-bordered {
     border: 0; }
 
-.form-control {
+.form-control1 {
   display: block;
   width: 100%;
   padding: 10px 12px;
@@ -7960,7 +7960,7 @@ body.touch .tooltip.show {
 
 .bg-grey {
   padding: 100px 0;
-  background: url("../images/bg-grey.jpg"); }
+  background: url("../images/"); }
   @media (max-width: 1023px) {
     .bg-grey {
       padding: 50px 0; } }
@@ -10960,7 +10960,7 @@ body.noScroll {
   flex-basis: 66px; }
   .footer-post-photo img {
     width: 49px;
-    border-radius: 50%; }
+    border-radius:50%; }
 .footer-post-text, .footer-post-text p {
   font-size: 15px;
   line-height: 23px; }

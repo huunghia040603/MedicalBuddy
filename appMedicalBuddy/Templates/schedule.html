@@ -1,0 +1,182 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} Medical Buddy - Đặt lịch {% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <div class="section mt-0">
+        <div class="breadcrumbs-wrap">
+            <div class="container">
+                <div class="breadcrumbs">
+                    <a href="/">Home</a>
+                    <span>Schedule</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--section-->
+    <div class="section page-content-first">
+        <div class="container">
+            <div class="text-center mb-2  mb-md-3 mb-lg-4">
+                <div class="h-sub theme-color">Lịch Medical Buddy</div>
+                <h1 data-bs-toggle="tooltip" title="Hooray!">Thời Gian Biểu</h1>
+                <div class="h-decor"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="text-center mb-4 mb-md-5 max-900">
+                <p>Cần đặt lịch hẹn với bác sĩ trong thời gian tới? Vui lòng ấn vào nút bên dưới để đặt lịch. </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="mb-2">
+                    <img width="220" height="300"
+                         src="{{ url_for('static', filename='images/bacsi/bscki-dang-le-minh-tri.jpeg') }}"/>
+                </div>
+                <h5>BS.Đặng Lê Minh Trí</h5>
+                <button type="submit" class="btn btn-hover-fill ml-3" data-bs-toggle="modal"
+                        data-bs-target="#modalBookingForm"><span>Đăt lịch ngay</span></button>
+
+            </div>
+            <div class="col-sm-3">
+                <div class="mb-2">
+                    <img width="220" height="300"
+                         src="{{ url_for('static', filename='images/bacsi/bsckii-truong-my-hien-1.jpeg') }}"/>
+                </div>
+                <h5>BS.Trương Mỹ Hiền</h5>
+                <button type="submit" class="btn btn-hover-fill ml-3" data-bs-toggle="modal"
+                        data-bs-target="#modalBookingForm"><span>Đăt lịch ngay</span></button>
+
+            </div>
+            <div class="col-sm-3">
+                <div class="mb-2">
+                    <img width="220" height="300"
+                         src="{{ url_for('static', filename='images/bacsi/bscki-tran-phuong-thao.jpeg') }}"/>
+                </div>
+                <h5>BS.Trần Phương Thảo</h5>
+                <button type="submit" class="btn btn-hover-fill ml-3" data-bs-toggle="modal"
+                        data-bs-target="#modalBookingForm"><span>Đăt lịch ngay</span></button>
+
+            </div>
+            <div class="col-sm-3">
+                <div class="mb-2">
+                    <img width="220" height="300"
+                         src="{{ url_for('static', filename='images/bacsi/thsbs-nguyen-truong-dung.jpeg') }}"/>
+                </div>
+                <h5>THS.Nguyễn Trường Dũng</h5>
+                <button type="submit" class="btn btn-hover-fill ml-3" data-bs-toggle="modal"
+                        data-bs-target="#modalBookingForm">
+                    <span href="/modal-booking">Đăt lịch ngay</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br/><br/><br/><br/><br/><br/><br/>
+
+
+<div class="modal modal-form fade" id="modalBookingForm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button aria-label='Close' class='close' data-bs-dismiss='modal' onclick="tailai()">
+                <i class="fa-solid fa-xmark"></i>
+                <script>
+                    function tailai(){
+                    location.reload();
+                    }
+                </script>
+            </button>
+            <div class="modal-body">
+                <div class="modal-form">
+                    <h3>Đặt Lịch Khám</h3>
+                    <form class="mt-15" id="bookForm" method="post" novalidate>
+                        <div class="successform">
+                            <p>Lịch khám đã được đặt thành công! Vui lòng đến đúng giờ</p>
+                        </div>
+                        <div class="errorform">
+                            <p>Đã xảy ra lỗi, hãy thử làm mới và gửi lại biểu mẫu ĐẦY ĐỦ hoặc vui lòng gọi 1900-234-000
+                                để được hỗ trợ.</p>
+                        </div>
+
+                        {%if current_user.user_role.value==2 %}
+                        <div class="errorform1" style="color:#c0392b">
+                            <p>Vui lòng sử dụng tài khoản BỆNH NHÂN hoặc liên hệ với Y TÁ!!! <br/> <a href="/sign-up"
+                                                                                                      style="color:#c0392b">Có
+                                thể TẠO TÀI KHOẢN TẠI ĐÂY </a></p>
+                        </div>
+                        {%endif%}
+
+                        {%if current_user.user_role.value==3 %}
+                        <div>Tên của Y Tá:</div>
+                        <div class="input-group">
+								<span>
+                                   <i class="fa-solid fa-user aa" style=""></i>
+                                </span>
+                            <input type="text" name="bookingname" class="form-control " autocomplete="off"
+                                   placeholder="Your Name*" value="{{ current_user.tenNguoiDung }}" readonly/>
+                        </div>
+                        <div>Tên của BỆNH NHÂN:</div>
+                        <div class="input-group">
+								<span>
+                                   <i class="fa-solid fa-user aa" style=""></i>
+                                </span>
+                            <input type="text" name="bookingname" class="form-control" id="tenBN" autocomplete="off"
+                                   placeholder="Your Name*"/>
+                        </div>
+                        <div>Email của BỆNH NHÂN:</div>
+                        <div class="input-group">
+										<span>
+											<i class="fa-solid fa-envelope aa"></i>
+										</span>
+                            <input type="text" name="bookingemail" class="form-control" id="emailBN" autocomplete="off"
+                                   placeholder="Your Email*"/>
+                        </div>
+                        {%else%}
+                        <div>Tên của bạn:</div>
+                        <div class="input-group">
+								<span>
+                                   <i class="fa-solid fa-user aa" style=""></i>
+                                </span>
+                            <input type="text" name="bookingname" class="form-control " autocomplete="off"
+                                   placeholder="Patient Name*" value="{{ current_user.tenNguoiDung }}"/>
+                        </div>
+                        <div>Email của bạn:</div>
+                        <div class="input-group">
+										<span>
+											<i class="fa-solid fa-envelope aa"></i>
+										</span>
+                            <input type="text" name="bookingemail" class="form-control" autocomplete="off"
+                                   placeholder="Patient Email*" value="{{ current_user.email }}"/>
+                        </div>
+                        {%endif%}
+                        {%if current_user.user_role.value==5 or current_user.user_role.value==3  %}
+                        <div>Chọn giờ, ngày/tháng/năm:</div>
+                        <div class="input-group flex-nowrap mt-1">
+								<span>
+									<i class="fa-solid fa-calendar-days aa"></i>
+								</span>
+                            <div class="datepicker-wrap">
+                                <input type="text" onfocus="(this.type='datetime-local')"
+                                       class="form-control datetimepicker"
+                                       placeholder="Pick Time" max="2024-01-30" id="ngayKham" name="datemin"
+                                       onclick="kiemtrangay()"></div>
+                        </div>
+                        {%endif%}
+
+                        <div class="text-right mt-2">
+                            <button type="button" class="btn btn-sm btn-hover-fill" onclick="add_booking()"
+                                    class="booking">Book now
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

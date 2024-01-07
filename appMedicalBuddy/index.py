@@ -61,14 +61,73 @@ def datcauhoi():
     return render_template('cauhoi.html')
 
 
+@app.route("/schedule")
+def lich():
+    return render_template('schedule.html')
+
+
+@app.route("/lapphieukham")
+def lapphieukham():
+    return render_template('doctor/lapphieukham.html', ds_BenhNhan = dao.get_BenhNhan())
+
+
+@app.route("/modal-booking")
+def modal_booking1():
+    return render_template('modal-booking.html')
+
+
+@app.route("/contact")
+def ketnoi():
+    return render_template('contacts.html')
+
+
 @app.route("/profile")
 def user_profile():
     return render_template('profile.html')
 
 
+
+@app.route("/blog")
+def mau_blog():
+    return render_template('blog.html')
+
+
 @login.user_loader
 def get_user(user_id):
     return dao.get_user_by_id(user_id)
+
+
+@app.route('/api/ngaykham', methods=["post"])
+@login_required
+def add_ngayKham():
+    ngayKham = request.json.get("ngayKham")
+    tenBN = request.json.get("tenBN")
+    emailBN = request.json.get("emailBN")
+
+    try:
+        dao.add_booking(name=tenBN,email=emailBN,ngayKham=ngayKham)
+    except Exception as ex:
+        return jsonify({"message": str(ex), 'status':500}), 404
+    else:
+        return jsonify({"message": "Lịch khám đã được đặt thành công! Vui lòng đến đúng giờ", 'status':200}), 200
+
+
+
+@app.route('/api/check', methods=["post"])
+@login_required
+def CheckMK():
+    matkhau = request.json.get("matkhau")
+
+    try:
+        if dao.check_MK(matkhau):
+            return jsonify({"message": "Xác Minh Thành Công", 'status': 200})
+        else:
+            return jsonify({"message": "Xác Minh Thất Bại", 'status': 400})
+    except Exception as ex:
+        return jsonify({"message": str(ex), 'status': 500})
+
+
+
 
 
 @app.route('/api/cauhoi', methods=["post"])
@@ -79,9 +138,9 @@ def add_question():
     try:
         dao.add_question(topic, message)
     except Exception as ex:
-        return jsonify({"message": "can't add questions!"}), 404
+        return jsonify({"message": "Không thể gửi câu hỏi lúc này!"}), 404
     else:
-        return jsonify({"message": "add questions success!"}), 200
+        return jsonify({"message": "Câu hỏi được gửi thành công!"}), 200
 
 
 

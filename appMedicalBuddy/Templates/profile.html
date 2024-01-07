@@ -62,6 +62,32 @@
                                                    class="form-control form-control-alternative" placeholder="Account Type"
                                                     value="Bệnh Nhân">
                                             {%endif%}
+                                            {%if (current_user.user_role.value==2)%}
+                                            <input type="text" id="input-type1" readonly
+                                                   class="form-control form-control-alternative" placeholder="Account Type"
+                                                    value="Bác Sĩ">
+                                            {%endif%}
+                                            {%if (current_user.user_role.value==3)%}
+                                            <input type="text" id="input-type2" readonly
+                                                   class="form-control form-control-alternative" placeholder="Account Type"
+                                                    value="Y Tá">
+                                            {%endif%}
+                                            {%if (current_user.user_role.value==1)%}
+                                            <input type="text" id="input-type3" readonly
+                                                   class="form-control form-control-alternative" placeholder="Account Type"
+                                                    value="Quản Trị">
+                                            {%endif%}
+                                            {%if (current_user.user_role.value==4)%}
+                                            <input type="text" id="input-type4" readonly
+                                                   class="form-control form-control-alternative" placeholder="Account Type"
+                                                    value="Thu Ngân">
+                                            {%endif%}
+
+
+
+
+
+
                                         </div>
                                     </div>
                                      <div class="col-lg-6">

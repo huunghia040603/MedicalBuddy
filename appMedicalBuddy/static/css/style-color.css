@@ -1699,7 +1699,35 @@ pre code {
     border: 0;
 }
 
-.form-control {
+.tooltip1 {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip1 .tooltiptext1 {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip1:hover .tooltiptext1 {
+  visibility: visible;
+}
+
+.aa
+{font-size:1.2rem;padding: 0.7rem 1rem;position: relative;z-index: 10;color: #1e76bd
+}
+.form-control1 {
     display: block;
     width: 100%;
     padding: 10px 12px;
@@ -12703,6 +12731,9 @@ form.contact-form textarea + label.error {
     color: #c0392b;
 }
 
+
+.
+
 .contact-form .form-control {
     font-size: 14px;
     min-height: 45px;
@@ -13768,6 +13799,68 @@ body.noScroll {
     flex-direction: row;
     margin-left: 15px;
 }
+
+
+.backToTop1 {
+display: none;
+position: fixed;
+  z-index: 1020;
+  right: 25px;
+  bottom: 25px;
+  width: 63px;
+  opacity:1;
+  height: 63px;
+  border-radius: 50%;
+  background: #1e76bd;
+  font-size: 18px;
+  line-height: 63px;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s, bottom 0.75s ease-in-out;
+}
+.backToTop1 [class*='icon'] {
+    display: inline-block;
+    transition: 0.5s; }
+
+@media (max-width: 1023px) {
+    .backToTop1 {
+      width: 41px;
+      height: 41px;
+      right: 15px;
+      font-size: 13px;
+      line-height: 41px; } }
+
+
+  @media (max-width: 1023px) {
+    .backToTop {
+      width: 41px;
+      height: 41px;
+      right: 15px;
+      font-size: 13px;
+      line-height: 41px; } }
+
+  .backToTop1 [class*='icon'] {
+    display: inline-block;
+    transition: 0.5s; }
+  .backToTop1:hover {
+    box-shadow: 0 0 0 10px rgba(30, 144, 255, 0.2); }
+    .backToTop1:hover [class*='icon'] {
+      -moz-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      transform: scaleX(-1);
+      filter: FlipH;
+      -ms-filter: "FlipH"; }
+
+  .backToTop1.visible {
+    opacity: 1;
+    bottom: 45px; }
+    @media (max-width: 1023px) {
+      .backToTop.visible {
+        bottom: 65px; } }
 
 .header-login a {
     display: inline-block;
@@ -15266,13 +15359,13 @@ body.noScroll {
 }
 
 .footer-post-photo {
-    min-width: 66px;
-    flex-basis: 66px;
+    min-width: 50px;
+    flex-basis:66px;
 }
 
 .footer-post-photo img {
-    width: 49px;
-    border-radius: 50%;
+    width: 50px;
+    border-radius: 20%;
 }
 
 .footer-post-text, .footer-post-text p {

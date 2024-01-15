@@ -481,7 +481,7 @@ a>code {
   }
 }
 
-.form-control1 {
+.form-control {
   font-size: 1rem;
   line-height: 1.5;
   display: block;
@@ -498,7 +498,7 @@ a>code {
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
-  .form-control1 {
+  .form-control {
     transition: none;
   }
 }
@@ -591,8 +591,8 @@ textarea.form-control {
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
-  border: 1px solid transparent;
-  border-radius: .375rem;
+  border: 1px solid #1e76bd;
+  border-radius: 2.375rem;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -746,7 +746,7 @@ textarea.form-control {
   left: 0;
   display: none;
   float: left;
-  min-width:10rem;
+  min-width: 10rem;
   margin: .125rem 0 0;
   padding: .5rem 0;
   list-style: none;
@@ -923,7 +923,6 @@ textarea.form-control {
 .nav-link {
   display: block;
   padding: .25rem .75rem;
-  font-size:12rem !important;
 }
 
 .nav-link:hover,
@@ -954,13 +953,11 @@ textarea.form-control {
   margin-bottom: 0;
   padding-left: 0;
   list-style: none;
-  font-size:50rem !important;
 }
 
 .navbar-nav .nav-link {
   padding-right: 0;
   padding-left: 0;
-  border:0 !important;
 }
 
 .navbar-nav .dropdown-menu {
@@ -1487,6 +1484,68 @@ a.text-white:focus {
   height: 36px;
 }
 
+
+form label.error {
+    display: block;
+    color: #ff0000;
+    font-size: 13px !important;
+    opacity: 1 !important;
+    margin-top: -18px;
+}
+
+.modal-form .modal-content .form-control + label.error {
+    margin-top: 0;
+}
+
+form.contact-form label.error {
+    margin-top: 0;
+}
+
+form.contact-form textarea + label.error {
+    margin-top: 0;
+}
+
+.successform,
+.errorform {
+    display: none;
+    min-height: 50px;
+}
+
+.successform,
+.errorform {
+    margin-top: 15px;
+}
+
+.successform p,
+.errorform p {
+    margin-bottom: 0 !important;
+}
+
+.successform {
+    color: green;
+}
+
+.errorform {
+    color: #c0392b;
+}
+
+
+.
+
+.contact-form .form-control {
+    font-size: 14px;
+    min-height: 45px;
+}
+
+
+
+
+.modal .close:hover {
+    opacity: .5;
+}
+
+
+
 .btn {
   font-size: .875rem;
   position: relative;
@@ -1497,6 +1556,8 @@ a.text-white:focus {
 }
 
 .btn:hover {
+  background-color:#1e76bd;
+  color:#fff;
   transform: translateY(-1px);
   box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
 }
@@ -2034,3 +2095,65 @@ tr:not(:first-child) td{
 tr:not(:first-child) td b{
   font-weight: 300;
 }
+
+
+.backToTop1 {
+display: none;
+position: fixed;
+  z-index: 1020;
+  right: 25px;
+  bottom: 25px;
+  width: 63px;
+  opacity:1;
+  height: 63px;
+  border-radius: 50%;
+  background: #1e76bd;
+  font-size: 18px;
+  line-height: 63px;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s, bottom 0.75s ease-in-out;
+}
+.backToTop1 [class*='icon'] {
+    display: inline-block;
+    transition: 0.5s; }
+
+@media (max-width: 1023px) {
+    .backToTop1 {
+      width: 41px;
+      height: 41px;
+      right: 15px;
+      font-size: 13px;
+      line-height: 41px; } }
+
+
+  @media (max-width: 1023px) {
+    .backToTop {
+      width: 41px;
+      height: 41px;
+      right: 15px;
+      font-size: 13px;
+      line-height: 41px; } }
+
+  .backToTop1 [class*='icon'] {
+    display: inline-block;
+    transition: 0.5s; }
+  .backToTop1:hover {
+    box-shadow: 0 0 0 10px rgba(30, 144, 255, 0.2); }
+    .backToTop1:hover [class*='icon'] {
+      -moz-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      transform: scaleX(-1);
+      filter: FlipH;
+      -ms-filter: "FlipH"; }
+
+  .backToTop1.visible {
+    opacity: 1;
+    bottom: 45px; }
+    @media (max-width: 1023px) {
+      .backToTop.visible {
+        bottom: 65px; } }

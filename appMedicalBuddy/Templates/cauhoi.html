@@ -1,5 +1,10 @@
 {% extends 'layout/base.html' %}
 {% block title %}Medical Buddy - Đặt câu hỏi{%endblock%}
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/question.js') }}"></script>
+    <link href="{{ url_for('static', filename='css/style-color.css') }}" rel="stylesheet">
+    {% endblock %}
 {%block content%}
 <br/>
     	<div class="page-content">

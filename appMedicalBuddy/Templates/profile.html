@@ -1,6 +1,15 @@
 {% extends 'layout/base.html' %}
 
 {% block title %}Medical Buddy - My Profile{% endblock %}
+
+{% block stylesheets %}
+    <!-- stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}
+
 {%block content%}
 <div class="container p-5 container-sm " style="max-width:600px">
         <div class=""
@@ -83,11 +92,6 @@
                                                     value="Thu Ngân">
                                             {%endif%}
 
-
-
-
-
-
                                         </div>
                                     </div>
                                      <div class="col-lg-6">
@@ -104,7 +108,8 @@
                             <!-- Change Password -->
                             <h6 class="heading-small text-muted mb-4">Change Password</h6>
                             <div class="pl-lg-4">
-                                <form id="changePasswordForm" method="post">
+
+                                <form id="changePasswordForm" method="post" action="">
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="form-group focused">
@@ -138,7 +143,7 @@
                                         </div>
                                     </div>
                                     <div class="row" style="padding: 0 15px;!important;">
-                                        <input type="submit" class="btn btn-hover-fill" value="Change"/>
+                                        <input type="button" class="btn btn-hover-fill" onclick="doimatkhau()" value="Change"/>
                                     </div>
                                 </form>
                             </div>
@@ -148,5 +153,26 @@
                 </div>
             </div>
  </div>
+<br/> <br/> <br/> <br/> <br/>
+{%block footer%}
+<button class="backToTop1 js-backToTop" id="myBtn">
+        <i class="icon fa-solid fa-arrow-up" ></i>
+    <script>
+    window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("myBtn").style.display = "block";
+        } else {
+            document.getElementById("myBtn").style.display = "none";
+        }
+    }
+    document.getElementById('myBtn').addEventListener("click", function(){
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    });
 
+
+</script>
+</button>
+{%endblock%}
 {% endblock %}

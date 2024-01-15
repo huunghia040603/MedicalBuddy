@@ -4,8 +4,21 @@
 
 
 {% if current_user.is_authenticated %}
-<h1 class="text-center text-success">CHÀO MỪNG BẠN ĐẾN TRANG QUẢN TRỊ!</h1>
-<h2 class="text-info">Chào {{ current_user.tenNguoiDung }}!</h2>
+<h1 class="text-center text-success"> TRANG QUẢN TRỊ!</h1>
+        <div class="d-flex">
+            <div class="w-50 p-2 d-flex align-items-center justify-content-start">
+                <div>
+                    <span class="d-inline-block text-uppercase text-primary h1 font-weight-bold">Hospital</span>
+                    <p class="mb-1">Chúng tôi muốn nghe ý kiến của bạn về cách cải thiện dịch vụ của chúng tôi và cung cấp dịch vụ chăm sóc tốt nhất có thể.</p>
+                    <span class="h4">Chào mừng  {{ current_user.tenNguoiDung }} đến trang  quản trị.</span>
+
+
+                </div>
+            </div>
+            <div class="w-50 p-3">
+                <img class="" src="{{ url_for('static', filename='images/bg_admin.svg') }}" alt="doctors">
+            </div>
+        </div>
 
 {% else %}
 <h1 class="text-center text-success">ĐĂNG NHẬP QUẢN TRỊ</h1>

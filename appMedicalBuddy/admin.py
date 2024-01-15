@@ -5,7 +5,7 @@ from flask import redirect, request
 
 from appMedicalBuddy.models import  Thuoc, BenhNhan, YTa, DatLichKham, LichSuBenh, HoaDon, ChiTietHoaDon, \
     CauHoi, TraLoi, QuyDinh, Benh, UserRoleEnum
-from appMedicalBuddy import db, app
+from appMedicalBuddy import db, app, dao
 
 import utils
 
@@ -177,6 +177,14 @@ class GetDetailView(BaseView):
         return current_user.is_authenticated
 
 
+class ThongKeView(AuthenticatedUser):
+    @expose("/")
+    def index(self):
+        return self.render('admin/stats.html', stats=dao.doanhthu_thongke(),mon_stats=dao.thuoc_thongke())
+
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.user_role==UserRoleEnum.QUANTRI
+
 class DetailByDateView(BaseView):
     @expose("/")
     def index(self):
@@ -195,7 +203,7 @@ class DetailByDateView(BaseView):
         return current_user.is_authenticated
 
 
-
+admin.add_view(ThongKeView(name="Thống kê"))
 admin.add_view(ThuocModelView(Thuoc, db.session, name="Thuocs", category='Lists'))
 admin.add_view(BenhNhanModelView(BenhNhan, db.session, name="BenhNhans", category='Lists'))
 admin.add_view(YTaModelView(YTa, db.session, name="YTas", category='Lists'))

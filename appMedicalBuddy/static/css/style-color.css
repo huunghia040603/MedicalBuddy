@@ -3735,8 +3735,8 @@ tbody.collapse.show {
     display: block;
     padding: 0.5rem 1rem;
     margin-bottom: -1px;
-    background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.125);
+    padding: .625rem 0
 }
 
 .nav-link:first-child {
@@ -14238,7 +14238,6 @@ position: fixed;
         line-height: 26px;
         font-weight: 500;
         font-family: "Poppins", serif;
-        background-color: transparent;
         padding: 7px 20px;
     }
 
@@ -14987,11 +14986,12 @@ position: fixed;
     cursor: pointer;
     display: block;
     color: #444;
-    font-size: 20px;
+    font-size: 22px;
     line-height: 35px;
     min-width: 40px;
     text-align: center;
     background-color: #fff;
+     border-radius:40px;
 }
 
 .header-search input[type='text'],
@@ -15015,6 +15015,7 @@ position: fixed;
     width: 230px;
     padding: 0 45px 0 10px;
     border-color: #ccc;
+    border-radius:25px;
 }
 
 .header-search input[type='submit'],
@@ -23188,6 +23189,12 @@ body:not(.touch) .quickLinks.closed .quickLinks-open:hover span {
         padding: 0 10px;
     }
 }
+
+.tt:hover
+{
+opacity:0.8;
+}
+
 
 .doctor-box > * {
     margin-bottom: 0;

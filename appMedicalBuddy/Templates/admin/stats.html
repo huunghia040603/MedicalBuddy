@@ -1,0 +1,123 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<h1 class="text-center text-info">THÔNG KÊ BÁO CÁO</h1>
+
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <table class="table">
+            <tr>
+                <th>STT</th>
+                <th>Ngày</th>
+                <th>Số lượng bệnh nhân</th>
+                <th>Doanh thu</th>
+                <th>Tỷ lệ</th>
+            </tr>
+            {% for s in stats %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ s[0] }}</td>
+                <td>{{ s[1] }}</td>
+                <td>{{ s[2] }} VNĐ</td>
+                <td>{{ '{:.2f}'.format(s[3]) }} %</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <table class="table">
+            <tr>
+                <th>STT</th>
+                <th>Tên thuốc</th>
+                <th>Đơn vị thuốc</th>
+                <th>Số lượng</th>
+                <th>Số lần dùng</th>
+            </tr>
+            {% for s in mon_stats %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ s[0] }}</td>
+                <td>{{ s[1] }}</td>
+                <td>{{ s[2] }} </td>
+                <td>{{ s[3] }} </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <canvas id="myChart2"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let data = [];
+    let labels = [];
+
+    let mData = [];
+    let mLabels = [];
+  {%  for s in stats %}
+  data.push({{s[2]}})
+  labels.push({{s[0]}})
+  {% endfor %}
+
+  {%  for s in mon_stats %}
+  mData.push({{s[2]}})
+  mLabels.push('{{s[0]}}')
+  {% endfor %}
+
+
+  window.onload = function() {
+      const ctx = document.getElementById('myChart');
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '# Doanh thu',
+            data: data,
+            borderWidth: 1,
+            backgroundColor: ['#1e76bd']
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      const ctx2 = document.getElementById('myChart2');
+
+      new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: mLabels,
+          datasets: [{
+            label: '# Số lượng',
+            data: mData,
+            borderWidth: 1,
+            backgroundColor: ['#20c997']
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+  }
+</script>
+
+{% endblock %}

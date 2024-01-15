@@ -1,4 +1,4 @@
-// Add Question
+// --------------------Add Question--------------
 function add_question1(){
 if (confirm("Bạn chắc chắn đặt câu hỏi ?") === true) {
   fetch('/api/cauhoi',{
@@ -19,116 +19,102 @@ if (confirm("Bạn chắc chắn đặt câu hỏi ?") === true) {
 
 
 
-function add_booking(){
-  fetch('/api/ngaykham',{
+//--------Cập Nhật  giá thuốc----------------
+function CapNhat(obj){
+  fetch('/api/capnhatthuoc',{
     method: "post",
     body: JSON.stringify({
-      "ngayKham":document.getElementById("ngayKham").value,
-      "tenBN":document.getElementById("tenBN").value,
-      "emailBN":document.getElementById("emailBN").value
+      "tenThuoc":obj.value
     }),
     headers:{
     'Content-Type': 'application/json'
     }
   }).then(res =>res.json()).then(data=>{
-     if (data.status===200)
-     {
-       document.getElementsByClassName("errorform")[0].style.display="none";
-       document.getElementsByClassName("successform")[0].style.display="block";
-        document.getElementsByClassName("booking")[0].disabled=true;
-      }
-       else
-       {
-       alert(data.message);
-        document.getElementsByClassName("successform")[0].style.display="none";
-       document.getElementsByClassName("errorform")[0].style.display="block";
-        }
-//     alert(data.message)
-  })
-}
-
-function kiemtrangay(){
-    today = new Date();
-    date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    if (date.lastIndexOf("-") - date.indexOf("-") === 2)
-        date = date.replace(date.substring(date.indexOf("-") + 1, date.lastIndexOf("-")), `0${today.getMonth() + 1}`)
-    if (date.length - date.lastIndexOf("-") === 2)
-        date = date.replace(date.substring(date.lastIndexOf("-") + 1), `0${today.getDate()}`)
-    document.getElementById("ngayKham").min = date + "T" + today.toLocaleTimeString(); ;
-
-}
-
-function layngay(){
-    var d = new Date();
-    document.getElementById("idngaykham1").value=d.toLocaleDateString();
-}
-
-function CheckMK(){
-fetch('/api/check',{
-    method: "post",
-    body: JSON.stringify({
-      "matkhau":document.getElementById("matkhau").value
-    }),
-    headers:{
-    'Content-Type': 'application/json'
-    }
-  }).then(res =>res.json()).then(data=>{
-     alert(data.message);
-     if (data.status===400)
-        window.location = "/log-out";
-      else
-        document.getElementById("modalKiemTra").id="modalKiemTra1";
-
-
-
-
-
-
-
-//     alert(data.message)
+     location.reload();
   })
 
 }
- // Back To To
 
 
-    // Back To Top
-//    function backToTop1(button) {
-//            var $button = $(button);
-//            $(window).on('scroll', function () {
-//                if ($(this).scrollTop() >= 500) {
-//                    $button.addClass('visible');
-//                } else {
-//                    $button.removeClass('visible');
-//                }
-//            });
-//            $button.on('click', function () {
-//                $('body,html').animate({
-//                    scrollTop: 0
-//                }, 1000);
-//            });
+ //-----Thêm Thuốc---------
+// function Add_thuoc() {
+//let element = document.getElementById('node');
+// let dem=1;
 //
-//    }
+//                                      if(typeof(Storage) !== "undefined") {
+//                                        if (localStorage.clickcount) {
+//                                          localStorage.clickcount = Number(localStorage.clickcount)+1;
+//                                        } else {
+//                                          localStorage.clickcount = 2;
+//                                        }
+//                                        dem= localStorage.clickcount;
+//                                      } else {
+//                                        document.getElementById("result").innerHTML = "Rất tiếc, trình duyệt của bạn không hỗ trợ Local Storage...";
+//                                      }
 //
-//backToTop1('.js-backToTop');
+//
+//let x = `<form id="changePasswordForm1" method="post" style="margin:0;height:40px;padding:0 12px">
+//                                    <div class="row" >
+//                                        <div class="col-lg-1" style="padding:0 4px 0 20px" >
+//                                            <div class="form-group focused" style="padding:0">
+//                                                <input type="text"  id="input-old-password${dem}"
+//                                                       class="form-control form-control-alternative"
+//                                                       placeholder="Auto"
+//                                                       name="oldPassword" value=${dem} style="padding:0 12px">
+//                                            </div>
+//                                        </div>
+//                                        <div class="col-lg-4" style="padding:0 4px 0 0">
+//                                            <div class="form-group focused">
+//                                                <input type="text" list="browsers1" id="browser1"
+//                                                       class="form-control form-control-alternative"
+//                                                       placeholder="Vui lòng chọn thuốc....."
+//                                                       name="newPassword">
+//                                                <datalist id="browsers1">
+//                                                    {%for t in ds_Thuoc%}
+//                                                    <option value="{{t.tenThuoc}}"/>
+//                                                    {% endfor%}
+//                                                </datalist>
+//                                            </div>
+//                                        </div>
+//                                        <div class="col-lg-1" style="padding:0 4px 0 0">
+//                                            <div class="form-group">
+//                                                <input type="text"
+//                                                       class="form-control form-control-alternative"
+//                                                       placeholder="Auto"
+//                                                       name="confirmPassword">
+//                                            </div>
+//                                        </div>
+//
+//                                        <div class="col-lg-2" style="padding:0 4px 0 0">
+//                                            <div class="form-group">
+//                                                <input type="text"
+//                                                       class="form-control form-control-alternative"
+//                                                       placeholder="Số lương tính theo ĐVT"
+//                                                       name="confirmPassword">
+//                                            </div>
+//                                        </div>
+//                                        <div class="col-lg-2" style="padding:0 4px 0 0">
+//                                            <div class="form-group">
+//                                                <input type="text"
+//                                                       class="form-control form-control-alternative"
+//                                                       placeholder="Auto"
+//                                                       name="confirmPassword">
+//                                            </div>
+//                                        </div>
+//                                        <div class="col-lg-2" style="padding:0 20px 0 0">
+//                                            <div class="form-group">
+//                                                <input type="text"
+//                                                       class="form-control form-control-alternative"
+//                                                       placeholder="Auto"
+//                                                       name="confirmPassword">
+//                                            </div>
+//                                        </div>
+//                                    </div>
+//                                </form>`
+//// Vị trí 1: beforeend
+//element.insertAdjacentHTML("beforeend", x);
+//
+//
+//}
 
-//// change password form
-//            if (forms.changePasswordForm.length) {
-//                var $changePasswordForm = forms.changePasswordForm;
-//                $changePasswordForm.submit(function () {
-//                    $.ajax({
-//                        type: "POST",
-//                        data: $changePasswordForm.serialize(),
-//                        url: "/api/change-password",
-//                        success: function success(data, textStatus, jqXHR) {
-//                            alert(data.message);
-//                            $changePasswordForm.get(0).reset();
-//                        },
-//                        error: function error(jqXHR, textStatus, errorThrown) {
-//                            alert(jqXHR.responseJSON.message);
-//                        }
-//                    })
-//                    return false;
-//                })
-//
-//            }(jQuery);
+

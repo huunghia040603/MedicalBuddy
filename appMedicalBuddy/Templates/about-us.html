@@ -1,0 +1,68 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} Medical Buddy - About us {% endblock %}
+
+{% block content %}
+	<div class="page-content">
+		<!--section-->
+		<div class="section mt-0">
+			<div class="breadcrumbs-wrap">
+				<div class="container">
+					<div class="breadcrumbs">
+						<a href="index.html">Home</a>
+						<span>About Us</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--//section-->
+		<!--section-->
+		<div class="section page-content-first">
+			<div class="container">
+				<div class="text-center mb-2  mb-md-3 mb-lg-4">
+					<div class="h-sub theme-color">Bác sĩ của chúng tôi làm việc vì nụ cười của bạn</div>
+					<h1>Thông tin Medical Buddy</h1>
+					<div class="h-decor"></div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 text-center text-lg-left pr-md-4">
+						<img src="{{ url_for('static', filename='images/demo/7.png') }}" class="w-100" alt="">
+						<div class="row mt-3">
+							<div class="col-6">
+								<img src="{{ url_for('static', filename='images/demo/2.png') }}" class="w-100" alt="">
+							</div>
+							<div class="col-6">
+								<img src="{{ url_for('static', filename='images/demo/3.png') }}" class="w-100" alt="">
+							</div>
+						</div>
+						<img style="padding:30px 0" src="{{ url_for('static', filename='images/demo/6.png') }}" class="w-100" alt="">
+
+					</div>
+					<div class="col-lg-6 mt-3 mt-lg-0">
+						<p>Trong gần 16 năm, phòng khám Medical Buddy của chúng tôi, các bác sĩ đã cung cấp dịch vụ khám chữa bệnh cũng như thuốc gia đình. Bác sĩ Medical Buddy hiểu rằng bệnh nhân có nhiều phương pháp thực hành khác nhau trong lĩnh vực này để lựa chọn.</p>
+						<p>Hãy đến và trải nghiệm nha khoa được thực hiện hơi khác một chút trong Phòng khám Tư nhân của chúng tôi. Một buổi thực hành nơi bạn sẽ:</p>
+						<ul class="marker-list-md">
+							<li>Tham gia vào các lựa chọn chăm sóc và điều trị của bạn</li>
+							<li>Được chào đón và cảm thấy thư giãn và được chăm sóc</li>
+							<li>Đánh giá cao đội ngũ có trình độ tốt, giàu kinh nghiệm</li>
+							<li>Mong muốn có được nha khoa tốt nhất</li>
+						</ul>
+						<div class="mt-3 mt-md-7"></div>
+						<h3>Sứ mệnh/Tầm nhìn <span class="theme-color">Statement</span></h3>
+						<div class="mt-0 mt-md-4"></div>
+						<p>Sứ mệnh của chúng tôi là vượt quá sự mong đợi bằng cách cung cấp dịch vụ chăm sóc nha khoa đặc biệt cho bệnh nhân, đồng thời xây dựng mối quan hệ tin cậy với họ.</p>
+						<p>Tầm nhìn của chúng tôi là trở thành một trong những phòng khám  hàng đầu trong khu vực, mở rộng dịch vụ của mình để tiếp cận thêm nhiều thành viên trong cộng đồng. Chúng tôi làm việc để được bệnh nhân tin tưởng, một đối tác có giá trị trong cộng đồng.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--//section-->
+	</div>
+<br/><br/><br/>
+
+
+
+{%endblock%}

@@ -1,11 +1,15 @@
-from flask import render_template, request, redirect, jsonify, session
-from flask_login import login_user, logout_user, current_user, login_required
+import base64
 
-from appMedicalBuddy import app, dao, login,admin
+from flask import render_template, request, redirect, jsonify, session, json
+from flask_login import login_user, logout_user, current_user, login_required
+import utils
+from appMedicalBuddy import app, dao, login, admin
 
 
 @app.route("/")
 def index():
+    if session.get("phieuKham"):
+        del session["phieuKham"]
     return render_template('index.html')
 
 
@@ -68,12 +72,29 @@ def lich():
 
 @app.route("/lapphieukham")
 def lapphieukham():
-    return render_template('doctor/lapphieukham.html', ds_BenhNhan = dao.get_BenhNhan())
+    kw = request.args.get('kw')
+    return render_template('doctor/lapphieukham.html',
+                           ds_BenhNhan=dao.get_BenhNhan(), ds_Thuoc=dao.get_Thuoc(kw),
+                           ds_DVT=dao.get_DVT(), phieuKham=utils.hien_phieu_tam_thoi(session.get("phieuKham")))
 
 
 @app.route("/modal-booking")
 def modal_booking1():
     return render_template('modal-booking.html')
+
+
+@app.route("/hoadon")
+def hoadon():
+    return render_template('hoadon.html',ds_chitiet=utils.chi_tiet_phieu_kham(session.get("phieuKham")))
+
+#
+# @app.route("/hoadon")
+# def hiensoluong():
+#     phieuKham= session.get("phieuKham")
+#     for i in
+#     phieuKham["cacLoaiThuoc"][id]["soLuong"]=
+
+
 
 
 @app.route("/contact")
@@ -86,6 +107,10 @@ def user_profile():
     return render_template('profile.html')
 
 
+@app.route("/about")
+def about_us():
+    return render_template('about-us.html')
+
 
 @app.route("/blog")
 def mau_blog():
@@ -97,6 +122,17 @@ def get_user(user_id):
     return dao.get_user_by_id(user_id)
 
 
+@app.route('/api/capnhatthuoc', methods=["post"])
+@login_required
+def capNhatThuoc():
+    tenThuoc = request.json.get("tenThuoc")
+
+    try:
+        return dao.get_Thuoc(tenThuoc)
+    except Exception as ex:
+        return jsonify({"message": str(ex), 'status': 500})
+
+
 @app.route('/api/ngaykham', methods=["post"])
 @login_required
 def add_ngayKham():
@@ -105,13 +141,66 @@ def add_ngayKham():
     emailBN = request.json.get("emailBN")
 
     try:
-        dao.add_booking(name=tenBN,email=emailBN,ngayKham=ngayKham)
+        dao.add_booking(name=tenBN, email=emailBN, ngayKham=ngayKham)
     except Exception as ex:
-        return jsonify({"message": str(ex), 'status':500}), 404
+        return jsonify({"message": str(ex), 'status': 500}), 404
     else:
-        return jsonify({"message": "Lịch khám đã được đặt thành công! Vui lòng đến đúng giờ", 'status':200}), 200
+        return jsonify({"message": "Lịch khám đã được đặt thành công! Vui lòng đến đúng giờ", 'status': 200}), 200
 
 
+@app.route('/api/luutamthoi', methods=["post"])
+def luutamthoi():
+            data = request.json
+
+            phieuKham = session.get("phieuKham")
+
+            if phieuKham is None:
+                phieuKham = {}
+
+            tenBenhNhan = data.get("tenBenhNhan")
+            trieuChung = data.get("trieuChung")
+            duDoanBenh = data.get("duDoanLoaiBenh")
+
+            id = data.get("id")
+
+            phieuKham['thongTinKhamBenh'] = {
+                'tenBenhNhan': tenBenhNhan,
+                'trieuChung': trieuChung,
+                'duDoanBenh': duDoanBenh
+            }
+
+
+            phieuKham["cacLoaiThuoc"] = {}
+
+            for i in id:
+                phieuKham["cacLoaiThuoc"][str(i)] = {
+                    "id": i,
+                    "tenThuoc": dao.get_Thuoc(id=int(i))[0][0].tenThuoc,
+                    "giaThuoc": dao.get_Thuoc(id=int(i))[0][0].gia
+                }
+            session["phieuKham"] = phieuKham
+
+            return utils.hien_phieu_tam_thoi(phieuKham)
+
+
+
+@app.route('/api/lapphieukham', methods=['post'])
+def lpk():
+    trieuChung = request.json.get("trieuChung")
+    chungDoan = request.json.get("chungDoan")
+    hoTen = request.json.get("hoTen")
+
+    if request.method.__eq__('POST'):
+        try:
+            if dao.addPhieuKham(name=hoTen, trieuChung=trieuChung,
+                          chungDoan=chungDoan):
+                return jsonify({"message": "Phiếu khám đã được tạo thành công!", 'status': 200})
+            else:
+                return jsonify({"message": "Phiếu khám bị lỗi vui lòng liên hệ 1900-234-000 ", 'status': 300})
+        except Exception as ex:
+            return jsonify({"message": str(ex), 'status': 500}), 404
+        else:
+            return jsonify({"message": "Phiếu khám đã được tạo thành công!", 'status': 500}), 200
 
 @app.route('/api/check', methods=["post"])
 @login_required
@@ -127,9 +216,6 @@ def CheckMK():
         return jsonify({"message": str(ex), 'status': 500})
 
 
-
-
-
 @app.route('/api/cauhoi', methods=["post"])
 @login_required
 def add_question():
@@ -141,7 +227,6 @@ def add_question():
         return jsonify({"message": "Không thể gửi câu hỏi lúc này!"}), 404
     else:
         return jsonify({"message": "Câu hỏi được gửi thành công!"}), 200
-
 
 
 @app.route('/admin/login', methods=['post'])
@@ -158,14 +243,13 @@ def admin_login():
 
 @app.route("/api/change-password", methods=["post"])
 def change_password():
-    old = request.form.get("oldPassword")
-    new = request.form.get("newPassword")
+    old = request.json.get("matkhaucu")
+    new = request.json.get("matkhaumoi")
 
-    if dao.change_password(current_user.patient.account.email, old, new):
+    if dao.change_password(current_user.username, old, new):
         return jsonify({"message": "Change Successful!"}), 200
 
     return jsonify({"message": "ERROR: Incorrect password!"}), 405
-
 
 
 if __name__ == '__main__':

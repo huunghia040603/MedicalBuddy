@@ -1,6 +1,11 @@
 {% extends 'layout/base.html' %}
 
 {% block title %} Medical Buddy - Đặt lịch {% endblock %}
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
+    <link href="{{ url_for('static', filename='css/style-color.css') }}" rel="stylesheet">
+    {% endblock %}
 
 {% block content %}
 <div class="page-content">
@@ -101,7 +106,7 @@
                                 để được hỗ trợ.</p>
                         </div>
 
-                        {%if current_user.user_role.value==2 %}
+                        {%if current_user.is_authenticated and current_user.user_role.value==2 %}
                         <div class="errorform1" style="color:#c0392b">
                             <p>Vui lòng sử dụng tài khoản BỆNH NHÂN hoặc liên hệ với Y TÁ!!! <br/> <a href="/sign-up"
                                                                                                       style="color:#c0392b">Có
@@ -109,7 +114,7 @@
                         </div>
                         {%endif%}
 
-                        {%if current_user.user_role.value==3 %}
+                        {%if current_user.is_authenticated and current_user.user_role.value==3 %}
                         <div>Tên của Y Tá:</div>
                         <div class="input-group">
 								<span>
@@ -124,15 +129,15 @@
                                    <i class="fa-solid fa-user aa" style=""></i>
                                 </span>
                             <input type="text" name="bookingname" class="form-control" id="tenBN" autocomplete="off"
-                                   placeholder="Your Name*"/>
+                                   placeholder="Patient Name*" required/>
                         </div>
                         <div>Email của BỆNH NHÂN:</div>
                         <div class="input-group">
 										<span>
 											<i class="fa-solid fa-envelope aa"></i>
 										</span>
-                            <input type="text" name="bookingemail" class="form-control" id="emailBN" autocomplete="off"
-                                   placeholder="Your Email*"/>
+                            <input type="email" name="bookingemail" class="form-control" id="emailBN" autocomplete="off"
+                                   placeholder="Patient Name*"required/>
                         </div>
                         {%else%}
                         <div>Tên của bạn:</div>
@@ -140,19 +145,19 @@
 								<span>
                                    <i class="fa-solid fa-user aa" style=""></i>
                                 </span>
-                            <input type="text" name="bookingname" class="form-control " autocomplete="off"
-                                   placeholder="Patient Name*" value="{{ current_user.tenNguoiDung }}"/>
+                            <input type="text" id="tenBN" name="bookingname" class="form-control " autocomplete="off"
+                                   placeholder="Your Name*" value="{{ current_user.tenNguoiDung }}"required/>
                         </div>
                         <div>Email của bạn:</div>
                         <div class="input-group">
 										<span>
 											<i class="fa-solid fa-envelope aa"></i>
 										</span>
-                            <input type="text" name="bookingemail" class="form-control" autocomplete="off"
-                                   placeholder="Patient Email*" value="{{ current_user.email }}"/>
+                            <input type="email" id="emailBN" name="bookingemail" class="form-control" autocomplete="off"
+                                   placeholder="Your Email*" value="{{ current_user.email }}" required/>
                         </div>
                         {%endif%}
-                        {%if current_user.user_role.value==5 or current_user.user_role.value==3  %}
+                        {%if current_user.is_authenticated and (current_user.user_role.value==5 or current_user.user_role.value==3)  %}
                         <div>Chọn giờ, ngày/tháng/năm:</div>
                         <div class="input-group flex-nowrap mt-1">
 								<span>
@@ -162,8 +167,18 @@
                                 <input type="text" onfocus="(this.type='datetime-local')"
                                        class="form-control datetimepicker"
                                        placeholder="Pick Time" max="2024-01-30" id="ngayKham" name="datemin"
-                                       onclick="kiemtrangay()"></div>
+                                       onclick="kiemtrangay()"required/></div>
                         </div>
+                        {%else%}
+                          <div class="errorform1" style="color:#c0392b">
+                            <p>Vui lòng sử dụng tài khoản BỆNH NHÂN hoặc liên hệ với Y TÁ!!! <br/> <a href="/sign-up"
+                                                                                                      style="color:#c0392b">Có
+                                thể TẠO TÀI KHOẢN TẠI ĐÂY </a></p>
+                         </div>
+                        <script>
+                            document.getElementById("name11").disabled=true;
+                            document.getElementById("email11").disabled=true;
+                        </script>
                         {%endif%}
 
                         <div class="text-right mt-2">

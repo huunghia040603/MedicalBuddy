@@ -64,20 +64,24 @@ def add_booking(name=None,email=None, ngayKham=None):
 
     return q
 
-def addPhieuKham(name=None,trieuChung=None,chungDoan=None,phieuKham=None):
-    if name:
-        taiKhoan = TaiKhoan.query.filter(TaiKhoan.tenNguoiDung.__eq__(name)).first()
+
+def addPhieuKham(phieuKham=None):
+    if phieuKham:
+        tenBenhNhan = phieuKham["thongTinKhamBenh"]["tenBenhNhan"]
+        trieuChung = phieuKham["thongTinKhamBenh"]["trieuChung"]
+        chungDoan = phieuKham["thongTinKhamBenh"]["duDoanBenh"]
+        taiKhoan = TaiKhoan.query.filter(TaiKhoan.tenNguoiDung.__eq__(tenBenhNhan)).first()
         if taiKhoan:
             lk=PhieuKham(id_BenhNhan=taiKhoan.id,id_BacSi=current_user.id ,ngayKham=datetime.now(),trieuChung=trieuChung,chungDoan=chungDoan)
             db.session.add(lk)
-    if phieuKham:
-        for c in phieuKham.values():
-            d = ChiTietPhieuKham(giaThuoc=c['price'], quantity=c['quantity'], receipt=r, product_id=c['id'])
-            db.session.add(d)
 
-    db.session.commit()
+            for c in phieuKham["cacLoaiThuoc"].values():
+                thuoc = Thuoc.query.filter(Thuoc.tenThuoc.__eq__(c["tenThuoc"])).first()
+                d = ChiTietPhieuKham(giaThuoc=c['giaThuoc'], soLuongKham=c['soLuong'],
+                                     phieukham=lk, id_Thuoc=c['id'], id_DonVi=thuoc.id_DVT)
+                db.session.add(d)
 
-    return lk
+            db.session.commit()
 
 
 def check_MK(matkhau):
@@ -96,21 +100,9 @@ def get_Thuoc(kw=None, id=None):
         thuoc = thuoc.filter(Thuoc.tenThuoc.contains(kw))
 
     if id:
-        thuoc = thuoc.filter(Thuoc.id_Thuoc.__eq__(id))
+        thuoc = thuoc.filter(Thuoc.id.__eq__(id))
 
     return thuoc.all()
-
-
-# def get_Thuoc():
-#     thuoc = Thuoc.query.filter(Thuoc.tenThuoc.__eq__(name)).first()
-#
-#     return {
-#         "tenThuoc": thuoc.tenThuoc if thuoc else "",
-#         "gia": thuoc.gia if thuoc else "",
-#         "cachDung": thuoc.cachDung if thuoc else "",
-#         "soLuong": soLuong,
-#         "donVi": donVi
-#     }
 
 
 def change_password(username, old_password, new_password):

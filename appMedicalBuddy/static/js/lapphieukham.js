@@ -52,13 +52,16 @@ fetch('/api/check',{
 
 
 //-----------Lưu Tạm Thời------------------
-function luuTamThoi(){
+function luuTamThoi(obj){
+    let href = "/api/luutamthoi"
+    if (obj.id === "xuatPhieu")
+        href = "/api/lapphieukham"
 	let tick = document.getElementById("table").querySelectorAll(" input[type='checkbox']:checked")
 	let a = [];
 	for (var i = 0; i < tick.length; i++)
 		a[i] = Number(tick[i].parentElement.id.substring(5)) + 5
 
-	fetch("/api/luutamthoi", {
+	fetch(href, {
 		method: "post",
 		body: JSON.stringify({
 			"tenBenhNhan": document.getElementById("tenBN")? document.getElementById("tenBN").value : "",

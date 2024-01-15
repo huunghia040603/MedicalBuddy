@@ -209,7 +209,7 @@
 
 
                                 <Button type="button" class="btn btn-hover-fill border-10 border-secondary"
-                                        onclick="luuTamThoi()"><i class="fa-regular fa-floppy-disk"
+                                        onclick="luuTamThoi(this)"><i class="fa-regular fa-floppy-disk"
                                                                   style="font-size:18px"></i> Lưu Tạm Thời
                                 </Button>
 
@@ -217,8 +217,8 @@
                             <hr class="my-4">
                             <div class="row" style="padding: 0 15px;!important;">
 
-                                <input type="submit" class="btn btn-hover-fill " value="XUẤT PHIẾU KHÁM & TẠO HOÁ ĐƠN"
-                                     onclick="xuatphieu()"  data-bs-toggle="modal" data-bs-target="#modalKiemTra" />
+                                <input id="xuatPhieu" type="submit" class="btn btn-hover-fill " value="XUẤT PHIẾU KHÁM & TẠO HOÁ ĐƠN"
+                                     onclick="luuTamThoi(this)"  data-bs-toggle="modal" data-bs-target="#modalKiemTra" />
                             </div>
                             <br/>
                         </form>

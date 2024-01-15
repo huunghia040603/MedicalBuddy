@@ -2,6 +2,9 @@
 {% block title %}Medical Buddy - Hoá Đơn{%endblock%}
 <!--class="container": create space on both sides-->
 {% block content %}
+{% block stylesheets%}
+<script src="{{ url_for('static', filename='js/hoadon.js') }}"></script>
+{% endblock %}
 <h1 class="text-center text-info">Receipt Details</h1>
 <table class="table">
     <thead class="thead-dark">
@@ -23,7 +26,7 @@
         <td>{{t["id"]}}</td>
         <td>{{t['tenThuoc']}}</td>
         <td>{{t["giaThuoc"]}}</td>
-        <td><input type="number" value="5"></td>
+        <td><input type="number" value="5" onblur="update_soLuong({{t['id']}}, this)"></td>
         <td><input type="text" placeholder="điền ghi chú...."></td>
     </tr>
     {%endfor%}
@@ -32,7 +35,7 @@
 </table>
 <div class="alert alert-info">
     <ul>
-        <li>Tổng tiền thuốc tạm tính :</li>
+        <li>Tổng tiền thuốc tạm tính : <span id="total_price">{{'{:.0f}'.format(total)}}</span> VNĐ</li>
     </ul>
     <div class="row" style="padding: 0 15px;!important;">
         <input type="button" class="btn btn-hover-fill" value="Thanh Toán Ngay" data-bs-toggle="modal"

@@ -43,3 +43,13 @@ def chi_tiet_phieu_kham(phieuKham):
     }
 
 
+def count_price(phieuKham):
+    total_price = 0
+
+    if phieuKham:
+        for pk in phieuKham["cacLoaiThuoc"].values():
+            total_price += int(pk["giaThuoc"]) * int(pk["soLuong"])
+
+    return total_price
+
+

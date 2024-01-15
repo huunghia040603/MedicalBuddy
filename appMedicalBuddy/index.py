@@ -1,5 +1,4 @@
 import base64
-
 from flask import render_template, request, redirect, jsonify, session, json
 from flask_login import login_user, logout_user, current_user, login_required
 import utils
@@ -85,16 +84,22 @@ def modal_booking1():
 
 @app.route("/hoadon")
 def hoadon():
-    return render_template('hoadon.html',ds_chitiet=utils.chi_tiet_phieu_kham(session.get("phieuKham")))
-
-#
-# @app.route("/hoadon")
-# def hiensoluong():
-#     phieuKham= session.get("phieuKham")
-#     for i in
-#     phieuKham["cacLoaiThuoc"][id]["soLuong"]=
+    return render_template('hoadon.html', ds_chitiet=utils.chi_tiet_phieu_kham(session.get("phieuKham")),
+                           total=utils.count_price(session.get("phieuKham")))
 
 
+@app.route("/api/thanhtoan/<id_thuoc>", methods=["put"])
+def update_quantity(id_thuoc):
+    phieuKham = session.get("phieuKham")
+
+    soLuong = request.json.get("soLuong")
+
+    if phieuKham and id_thuoc in phieuKham["cacLoaiThuoc"]:
+        phieuKham["cacLoaiThuoc"][str(id_thuoc)]["soLuong"] = soLuong
+
+    session["phieuKham"] = phieuKham
+
+    return jsonify(utils.count_price(phieuKham))
 
 
 @app.route("/contact")
@@ -169,38 +174,44 @@ def luutamthoi():
                 'duDoanBenh': duDoanBenh
             }
 
-
             phieuKham["cacLoaiThuoc"] = {}
 
             for i in id:
                 phieuKham["cacLoaiThuoc"][str(i)] = {
                     "id": i,
                     "tenThuoc": dao.get_Thuoc(id=int(i))[0][0].tenThuoc,
-                    "giaThuoc": dao.get_Thuoc(id=int(i))[0][0].gia
+                    "giaThuoc": dao.get_Thuoc(id=int(i))[0][0].gia,
+                    "soLuong": 5
                 }
             session["phieuKham"] = phieuKham
 
             return utils.hien_phieu_tam_thoi(phieuKham)
 
 
-
 @app.route('/api/lapphieukham', methods=['post'])
 def lpk():
-    trieuChung = request.json.get("trieuChung")
-    chungDoan = request.json.get("chungDoan")
-    hoTen = request.json.get("hoTen")
+    luutamthoi()
+    return redirect("/hoadon")
 
-    if request.method.__eq__('POST'):
-        try:
-            if dao.addPhieuKham(name=hoTen, trieuChung=trieuChung,
-                          chungDoan=chungDoan):
-                return jsonify({"message": "Phiếu khám đã được tạo thành công!", 'status': 200})
-            else:
-                return jsonify({"message": "Phiếu khám bị lỗi vui lòng liên hệ 1900-234-000 ", 'status': 300})
-        except Exception as ex:
-            return jsonify({"message": str(ex), 'status': 500}), 404
-        else:
-            return jsonify({"message": "Phiếu khám đã được tạo thành công!", 'status': 500}), 200
+
+@app.route('/api/thanhtoan', methods=['post'])
+def pay():
+    id = request.json.get("id")
+    soLuong = request.json.get("soLuong")
+
+    phieuKham = session.get("phieuKham")
+
+    if phieuKham:
+        for i in range(len(id)):
+            phieuKham["cacLoaiThuoc"][str(id[i])]["soLuong"] = soLuong[i]
+
+    session["phieuKham"] = phieuKham
+
+    try:
+        pass
+    except Exception as ex:
+        return jsonify({"message": str(ex), "status": 500})
+
 
 @app.route('/api/check', methods=["post"])
 @login_required

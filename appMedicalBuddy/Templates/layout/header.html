@@ -60,9 +60,20 @@
                     <a class="nav-link " style="border:0" href="/lapphieukham">Form Creation</a>
                 </li>
                 {% endif %}
+                {%if current_user.is_authenticated and current_user.user_role.value == 4%}
+                <li class="nav-item me-2 "  style="font-size:1.20rem" id="hoadon1">
+                    <a class="nav-link " style="border:0" href="/hoadonNV">Patient invoice</a>
+                </li>
+                {% endif %}
+
+                {%if current_user.is_authenticated and current_user.user_role.value == 5%}
+                <li class="nav-item me-2 "  style="font-size:1.20rem" id="hoadon2">
+                    <a class="nav-link " style="border:0" href="/hoadonBN">Patient invoice</a>
+                </li>
+                {% endif %}
+
                 <li class="nav-item me-2 "  style="font-size:1.20rem;" >
                     <a class="nav-link " style="border:0" href="/about">About Us</a>
-                </li>
                 <li class="nav-item me-2" style="font-size:1.20rem">
                     <a href="/schedule" class="nav-link" style="border:0"
                        data-toggle="dropdown">Schedule Table</a>

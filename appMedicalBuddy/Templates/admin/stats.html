@@ -2,7 +2,27 @@
 
 {% block body %}
 <h1 class="text-center text-info">THÔNG KÊ BÁO CÁO</h1>
-
+<form method="get">
+    <div class="d-flex flex-row ">
+        <div class="p-2 "><label class="form-label">Tháng:</label></div>
+        <div class="p-2 ">
+            <input type="number" class="form-control" id="thang" min="1" max="12" placeholder="Nhập tháng muốn xem" name="thang">
+        </div>
+         <div class="p-2 ">
+            <button type="submit" class="btnn">Xem</button>
+        </div>
+    </div>
+</form>
+  <div class="d-flex flex-row ">
+        <div class="p-2 "><label class="form-label">Loại biểu đồ:</label></div>
+        <div class="p-2 ">
+            <select class="form-select" id="bieudo">
+                <option value="1">bar</option>
+                <option value="2">pie</option>
+                <option value="3">doughnut</option>
+            </select>
+        </div>
+    </div>
 <div class="row">
     <div class="col-md-6 col-xs-12">
         <table class="table">
@@ -118,6 +138,23 @@
         }
       });
   }
+
+
+
+
+  function getThang() {
+fetch('/api/stats',{
+    method:'post',
+    body:JSON.stringify({
+        "thang":document.getElementById("thang").value
+    }),
+    headers:{
+    'Content-Type': 'application/json'
+    }
+}).then(res => res.json()).then(data => {
+
+})
+}
 </script>
 
 {% endblock %}

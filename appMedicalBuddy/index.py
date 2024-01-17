@@ -82,6 +82,15 @@ def modal_booking1():
     return render_template('modal-booking.html')
 
 
+@app.route("/hoadonNV")
+def HDTN():
+    return render_template('HDThuNgan.html',ds_HD=dao.get_HD())
+
+
+@app.route("/hoadonBN")
+def HDBN():
+    return render_template('HDBenhNhan.html',ds_HDBN=dao.get_HDBN(),tongTien=dao.tong_HDBN())
+
 @app.route("/hoadon")
 def hoadon():
     return render_template('hoadon.html', ds_chitiet=utils.chi_tiet_phieu_kham(session.get("phieuKham")),
@@ -194,8 +203,8 @@ def lpk():
     return redirect("/hoadon")
 
 
-@app.route('/api/thanhtoan', methods=['post'])
-def pay():
+@app.route('/api/luuPhieuKham', methods=['post'])
+def luuPhieuKham():
     id = request.json.get("id")
     soLuong = request.json.get("soLuong")
 
@@ -208,9 +217,37 @@ def pay():
     session["phieuKham"] = phieuKham
 
     try:
-        pass
+        dao.addPhieuKham(phieuKham)
     except Exception as ex:
         return jsonify({"message": str(ex), "status": 500})
+    else:
+        return jsonify({"message": "Lưu thành công", "status": 200})
+
+
+@app.route('/api/luuHD', methods=["post"])
+@login_required
+def luuHD():
+    tienThuoc = request.json.get("tienThuoc"),
+    tienKham =  request.json.get("tienKham")
+    tongTien = request.json.get("tongTien")
+
+
+    try:
+        if dao.luuHD(tienThuoc,tienKham,tongTien, session.get("phieuKham")):
+           return jsonify({"message": "Đã Lưu Hoá Đơn", 'status': 200})
+        else:
+          return jsonify({"message": "Lưu Hoá Đơn Thất Bại", 'status': 400})
+
+    except Exception as ex:
+          return jsonify({"message": str(ex), 'status': 500})
+
+
+@app.route("/api/hdbenhnhan", methods=["post"])
+def hdbenhnhan():
+    try:
+        dao.update_status()
+    except Exception as ex:
+        return jsonify({"message": str(ex)})
 
 
 @app.route('/api/check', methods=["post"])
@@ -264,4 +301,4 @@ def change_password():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=10000)
+    app.run(debug=True, port=12000)

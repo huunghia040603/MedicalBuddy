@@ -180,10 +180,13 @@ class GetDetailView(BaseView):
 class ThongKeView(AuthenticatedUser):
     @expose("/")
     def index(self):
-        return self.render('admin/stats.html', stats=dao.doanhthu_thongke(),mon_stats=dao.thuoc_thongke())
+        thang = request.args.get('thang')
+        return self.render('admin/stats.html', stats=dao.doanhthu_thongke(thang),mon_stats=dao.thuoc_thongke(thang))
 
     def is_accessible(self):
         return current_user.is_authenticated and current_user.user_role==UserRoleEnum.QUANTRI
+
+
 
 class DetailByDateView(BaseView):
     @expose("/")
@@ -223,8 +226,8 @@ admin.add_view(QuyDinhModelView(QuyDinh, db.session, name="Rules"))
 
 admin.add_view(BenhModelView(Benh, db.session, name="Benh"))
 
-admin.add_view(StatsView(name="Monthly Report", category="Statistics"))
-admin.add_view(DetailByDateView(name="Stats", category="Statistics"))
+# admin.add_view(StatsView(name="Monthly Report", category="Statistics"))
+# admin.add_view(DetailByDateView(name="Stats", category="Statistics"))
 
 admin.add_view(MenuView(name="My Profile", endpoint="profile", category="menu"))
 admin.add_view(LogoutView(name="Logout", endpoint="logout", category="menu"))

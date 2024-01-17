@@ -59,7 +59,7 @@ function luuTamThoi(obj){
 	let tick = document.getElementById("table").querySelectorAll(" input[type='checkbox']:checked")
 	let a = [];
 	for (var i = 0; i < tick.length; i++)
-		a[i] = Number(tick[i].parentElement.id.substring(5)) + 5
+		a[i] = Number(tick[i].parentElement.id.substring(5))
 
 	fetch(href, {
 		method: "post",

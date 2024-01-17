@@ -139,9 +139,9 @@ class CapNhatQuyDinh(db.Model):
 
 
 class HoaDon(BaseModel):
-    id_NhanVienThuNgan = Column(Integer, ForeignKey(NhanVienThuNgan.id))
+    id_NhanVienThuNgan = Column(Integer, ForeignKey(NhanVienThuNgan.id),default=12)
     id_BenhNhan = Column(Integer, ForeignKey(BenhNhan.id), nullable=False)
-    trangThai = Column(String(100))
+    trangThai = Column(String(100),default="Chưa Thanh Toán")
     ngayThanhToan = Column(DateTime)
     tienKham = Column(Float)
     tienThuoc = Column(Float)

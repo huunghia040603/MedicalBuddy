@@ -83,6 +83,16 @@ def addPhieuKham(phieuKham=None):
 
             db.session.commit()
 
+def luuHD(tienThuoc,tienKham,tongTien,phieuKham=None):
+    if phieuKham:
+        tenBenhNhan = phieuKham["thongTinKhamBenh"]["tenBenhNhan"]
+        taiKhoan = TaiKhoan.query.filter(TaiKhoan.tenNguoiDung.__eq__(tenBenhNhan)).first()
+        if taiKhoan:
+          HD=HoaDon(id_BenhNhan=taiKhoan.id,ngayThanhToan=datetime.now(),tienThuoc=tienThuoc,tienKham=tienKham,tongTien=tongTien)
+          db.session.add(HD)
+    db.session.commit()
+    return HD
+
 
 def check_MK(matkhau):
     #tk = TaiKhoan.query.filter(TaiKhoan.username == current_user.username).first()
@@ -91,6 +101,22 @@ def check_MK(matkhau):
 
 def get_BenhNhan():
     return BenhNhan.query.all()
+
+
+def get_HD():
+    return HoaDon.query.all()
+
+
+def tong_HDBN():
+    d=0
+    hoadon= HoaDon.query.filter(HoaDon.id_BenhNhan == current_user.id).all()
+    for h in hoadon:
+        d= d+ h.tongTien;
+    return d
+
+
+def get_HDBN():
+      return HoaDon.query.filter(HoaDon.id_BenhNhan == current_user.id).all()
 
 
 def get_Thuoc(kw=None, id=None):
@@ -105,6 +131,15 @@ def get_Thuoc(kw=None, id=None):
     return thuoc.all()
 
 
+def update_status():
+    hoaDon = HoaDon.query.filter(HoaDon.id_BenhNhan.__eq__(current_user.id)).all()
+    for hd in hoaDon:
+        hd.trangThai = "Chờ xác nhận của thu ngân"
+        db.session.add(hd)
+
+    db.session.commit()
+
+
 def change_password(username, old_password, new_password):
     account_patient = TaiKhoan.query.filter(TaiKhoan.username == username).first()
 
@@ -116,7 +151,7 @@ def change_password(username, old_password, new_password):
 
     return False
 
-def doanhthu_thongke(month=6):
+def doanhthu_thongke(month=None):
     query = (db.session.query(func.extract('day', HoaDon.ngayThanhToan),
                               func.count(HoaDon.id_BenhNhan), func.sum(HoaDon.tongTien),
                               func.sum(HoaDon.tongTien) / TongDT(month)[0] * 100)
@@ -128,11 +163,11 @@ def doanhthu_thongke(month=6):
     return query.all()
 
 
-def thuoc_thongke(month=9):
+def thuoc_thongke(month=None):
     query = (db.session.query(Thuoc.tenThuoc, DonViThuoc.tenDVT, func.sum(ChiTietPhieuKham.soLuongKham),
-                              func.count(ChiTietPhieuKham.id_Thuoc))
+                              func.count(ChiTietPhieuKham.id))
              .join(DonViThuoc, Thuoc.id_DVT.__eq__(DonViThuoc.id_DVT))
-             .join(ChiTietPhieuKham, ChiTietPhieuKham.id_Thuoc.__eq__(Thuoc.id_Thuoc))
+             .join(ChiTietPhieuKham, ChiTietPhieuKham.id_Thuoc.__eq__(Thuoc.id))
              .filter(func.extract("month",PhieuKham.ngayKham).__eq__(month))
              .group_by(Thuoc.tenThuoc, DonViThuoc.tenDVT)
              .order_by(func.count(ChiTietPhieuKham.id_Thuoc),func.sum(ChiTietPhieuKham.soLuongKham)))

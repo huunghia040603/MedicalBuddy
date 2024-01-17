@@ -4,6 +4,8 @@
 {% block content %}
 {% block stylesheets%}
 <script src="{{ url_for('static', filename='js/hoadon.js') }}"></script>
+    <link href="{{ url_for('static', filename='css/style-color.css') }}" rel="stylesheet">
+
 {% endblock %}
 <h1 class="text-center text-info">Receipt Details</h1>
 <table class="table">
@@ -38,8 +40,8 @@
         <li>Tổng tiền thuốc tạm tính : <span id="total_price">{{'{:.0f}'.format(total)}}</span> VNĐ</li>
     </ul>
     <div class="row" style="padding: 0 15px;!important;">
-        <input type="button" class="btn btn-hover-fill" value="Thanh Toán Ngay" data-bs-toggle="modal"
-               data-bs-target="#modalThanhToan"/>
+        <input type="button" class="btn btn-hover-fill" value="Xem Hoá Đơn" data-bs-toggle="modal"
+               data-bs-target="#modalThanhToan" onclick="luuPhieuKham()"/>
     </div>
 </div>
 
@@ -58,79 +60,34 @@
                 <div class="modal-form">
                     <h3>Thanh Toán Hoá Đơn</h3>
                     <form class="mt-15" id="bookForm" method="post" novalidate>
-                        <div class="successform">
-                            <p>Lịch khám đã được đặt thành công! Vui lòng đến đúng giờ</p>
-                        </div>
-                        <div class="errorform">
-                            <p>Đã xảy ra lỗi, hãy thử làm mới và gửi lại biểu mẫu ĐẦY ĐỦ hoặc vui lòng gọi 1900-234-000
-                                để được hỗ trợ.</p>
-                        </div>
 
 
                         <div class="input-group">
                               <div style="z-index: 100;position: relative; padding: 10px 10px 0 10px;">Tiền Thuốc: </div>
-                            <input type="text" name="bookingname" class="form-control " autocomplete="off"
-                                   placeholder="Patient Name*" value="{{ current_user.tenNguoiDung }} VNĐ" readonly/>
+                            <input id="tienThuoc" type="text" name="bookingname" class="form-control " autocomplete="off"
+                                   placeholder="Patient Name*" value="{{'{:.0f}'.format(total)}} VNĐ" readonly/>
                         </div>
 
 
                         <div class="input-group">
                             <div style="z-index: 100;position: relative; padding: 10px 10px 0 10px;">Tiền Khám: </div>
-                            <input type="text" name="bookingname" class="form-control " autocomplete="off"
-                                   placeholder="Patient Name*" value="{{ current_user.tenNguoiDung }} VNĐ"readonly/>
+                            <input id="tienKham" type="text" name="bookingname" class="form-control " autocomplete="off"
+                                   placeholder="Patient Name*" value="100000 VNĐ"readonly/>
                         </div>
                         <hr/>
                          <div class="input-group">
                             <div style="z-index: 100;position: relative; padding: 10px 10px 0 10px;">Tổng Tiền: </div>
-                            <input type="text" name="bookingname" class="form-control " autocomplete="off"
-                                   placeholder="Patient Name*" value="230.000 VNĐ" readonly/>
+                            <input id="tongTien" type="text" name="bookingname" class="form-control " autocomplete="off"
+                                   placeholder="Patient Name*" value="{{'{:.0f}'.format(total+100000)}} VNĐ " readonly/>
                         </div>
                         <br/>
-                        <div id="paypal-button-container" style="max-width:300px;"></div>
-
-                        <!-- Include the PayPal JavaScript SDK -->
-                        <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD&disable-funding=card&intent=authorize"></script>
-
-                        <script>
-                            paypal.Buttons({
-
-                                style: {
-                                    layout: 'vertical',
-                                    color:  'gold',
-                                    shape:  'pill',
-                                    label:  'pay',
-                                }
-
-                            }).render('#paypal-button-container');
-                        </script>
-
-                        <div class="mr-2 tt" >
-                            <a href="/pay-with-momo"
-                               style="background: #bb0077; padding: 5px 10px 5px 25px;display: inline-block;border-radius: 23px;height:100%;width:300px">
-                                <img style="max-width:38px;border-radius: 5px; border: 1px solid #fff; "
-                                     src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="MoMo">
-                                <p style="display: inline-block;color: #fff;">Pay With <span style="font-weight: 700;">MoMo</span>
-                                </p>
-                            </a>
-                        </div>
-
-
-                          <div class="mr-2 tt" style="padding:5px 0">
-                            <a href="" data-bs-toggle="modal"
-                                 data-bs-target="#modalThanhCong"
-                               style="background: #009cde; padding: 8px 10px 8px 25px;display: inline-block;border-radius: 23px;height:100%;width:300px">
-                                       <i style="color: #ffffff; font-size:25px;border-radius: 5px; " class="fa-solid fa-money-bill-wave"></i>
-
-                                <p style="display: inline-block;color: #fff;">Thanh Toán <span style="font-weight: 700;">Trực Tiếp</span>
-                                </p>
-                            </a>
 
                         <div class="text-right mt-2">
                             <button type="button" class="btn btn-sm btn-hover-fill" style=""
-                                    class="booking1" data-bs-dismiss="modal">Huỷ
+                                    class="booking1" data-bs-dismiss="modal" onclick="pay()">Lưu Hoá Đơn
                             </button>
                         </div>
-                          </div>
+
                     </form>
 
                 </div>

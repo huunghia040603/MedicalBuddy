@@ -140,6 +140,16 @@ def update_status():
     db.session.commit()
 
 
+def suatrangThai(trangThai):
+    hoaDon = HoaDon.query.all()
+    for tt in range(len(trangThai)):
+        hoaDon[tt].trangThai = trangThai[tt]
+        db.session.add(hoaDon[tt])
+
+    db.session.commit()
+
+
+
 def change_password(username, old_password, new_password):
     account_patient = TaiKhoan.query.filter(TaiKhoan.username == username).first()
 
@@ -174,7 +184,7 @@ def thuoc_thongke(month=None):
 
     return query.all()
 
-def TongDT(month=6):
+def TongDT(month=None):
     return (db.session.query(func.sum(HoaDon.tongTien))
             .filter(func.extract('month', HoaDon.ngayThanhToan).__eq__(month))).first()
 

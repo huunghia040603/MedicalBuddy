@@ -250,6 +250,18 @@ def hdbenhnhan():
         return jsonify({"message": str(ex)})
 
 
+@app.route("/api/suatrangthai", methods=["post"])
+def suatrangthai():
+    trangThai = request.json.get("trangThai")
+
+    try:
+        dao.suatrangThai(trangThai)
+    except Exception as ex:
+        return jsonify(str(ex))
+    else:
+        return jsonify("Cập nhật thành công")
+
+
 @app.route('/api/check', methods=["post"])
 @login_required
 def CheckMK():

@@ -207,27 +207,27 @@ class DetailByDateView(BaseView):
 
 
 admin.add_view(ThongKeView(name="Thống kê"))
-admin.add_view(ThuocModelView(Thuoc, db.session, name="Thuocs", category='Lists'))
-admin.add_view(BenhNhanModelView(BenhNhan, db.session, name="BenhNhans", category='Lists'))
-admin.add_view(YTaModelView(YTa, db.session, name="YTas", category='Lists'))
-admin.add_view(BookModelView(DatLichKham, db.session, name="DatLichKham", endpoint='book-lists', category='Lists'))
-admin.add_view(ProfilePatinetView(name="Information BenhNhan", category='Lists'))
+admin.add_view(ThuocModelView(Thuoc, db.session, name="Thuốc", category='Danh Sách'))
+admin.add_view(BenhNhanModelView(BenhNhan, db.session, name="Bệnh Nhân", category='Danh Sách'))
+admin.add_view(YTaModelView(YTa, db.session, name="Y Tá", category='Danh Sách'))
+admin.add_view(BookModelView(DatLichKham, db.session, name="Đặt Lịch Khám", endpoint='book-lists', category='Danh Sách'))
+# admin.add_view(ProfilePatinetView(name="Thông Tin Bệnh Nhân", category='Lists'))
 
-admin.add_view(LichSuBenhModelView(LichSuBenh, db.session, name="Type Info Checking", endpoint="Record", category='Medical Examination'))
-admin.add_view(HoaDonModelView(HoaDon, db.session, name="Choose Doctor", category='Medical Examination'))
-admin.add_view(ChiTietHoaDonModelView(ChiTietHoaDon, db.session, name="Get Thuocs", category='Medical Examination'))
-admin.add_view(AllDetailsModelView(name="HoaDon", category="Medical Examination"))
-admin.add_view(GetDetailView(name="HoaDon Details", category="Medical Examination"))
+# admin.add_view(LichSuBenhModelView(LichSuBenh, db.session, name="Type Info Checking", endpoint="Record", category='Thông Tin Khám Bệnh'))
+admin.add_view(HoaDonModelView(HoaDon, db.session, name="Hoá Đơn", category='Thông Tin Khám Bệnh'))
+# admin.add_view(ChiTietHoaDonModelView(ChiTietHoaDon, db.session, name="Thuốc", category='Thông Tin Khám Bệnh'))
+# admin.add_view(AllDetailsModelView(name="HoaDon", category="Thông Tin Khám Bệnh"))
+# admin.add_view(GetDetailView(name="HoaDon Details", category="Medical Examination"))
 
 admin.add_view(CauHoiModelView(CauHoi, db.session, name="CauHoi", category="Q&A"))
 admin.add_view(TraLoiModelView(TraLoi, db.session, name="TraLoi", category="Q&A"))
 
-admin.add_view(QuyDinhModelView(QuyDinh, db.session, name="Rules"))
+admin.add_view(QuyDinhModelView(QuyDinh, db.session, name="Luật"))
 
-admin.add_view(BenhModelView(Benh, db.session, name="Benh"))
+admin.add_view(BenhModelView(Benh, db.session, name="Bệnh"))
 
 # admin.add_view(StatsView(name="Monthly Report", category="Statistics"))
 # admin.add_view(DetailByDateView(name="Stats", category="Statistics"))
 
-admin.add_view(MenuView(name="My Profile", endpoint="profile", category="menu"))
-admin.add_view(LogoutView(name="Logout", endpoint="logout", category="menu"))
+# admin.add_view(MenuView(name="My Profile", endpoint="profile", category="menu"))
+admin.add_view(LogoutView(name="Đăng Xuất", endpoint="logout", category="menu"))
